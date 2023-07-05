@@ -56,10 +56,10 @@
 # Пароль для подключения - личный
 import psycopg2
 
+# Пароль - свой
 
 
-
-with psycopg2.connect(database="client", user="postgres", password="Greon68Taganrog2023") as conn:
+with psycopg2.connect(database="client", user="postgres", password="postgres") as conn:
     with conn.cursor() as cur:
         #удаление таблиц
         cur.execute("""
@@ -234,63 +234,14 @@ with psycopg2.connect(database="client", user="postgres", password="Greon68Tagan
 
         # 7) Функция, позволяющая найти клиента по его данным: имени, фамилии, email или телефону
 
-        def find_client2(cursor, number):
-            ''' Функция определяет id клиента
-             по номеру его телефона '''
-            cursor.execute("""
-                     SELECT cl.client_id FROM clients cl
-                     JOIN phones ph ON cl.client_id = ph.client_id
-                     WHERE  number=%s ;
-                     """, (number,))
-            return cursor.fetchone()[0]
-
-
-        required_client_1 = find_client2(cur, 55522233)
-        print(required_client_1)
-
-
-        def find_client2(cursor,first_name='%', last_name='%',email='%', number=None):
-            ''' Функция определяет id клиента
-            по одному из параметров - имени , фамилии , адресу электронной почты ,
-            либо номеру его телефона '''
-
-            cursor.execute("""
-                SELECT cl.client_id FROM clients cl
-                JOIN phones ph ON cl.client_id = ph.client_id
-                WHERE first_name=%s OR last_name=%s OR email=%s OR number=%s ;
-                """, (first_name,last_name,email,number,))
-            return cursor.fetchone()[0]
-
-
-        # cur.execute(""" Select * From clients;""")
-        # print(cur.fetchall())
-        #
-        # required_client_1 = find_client2(cur,'Serg','Sun','',)
-        # print (required_client_1)
+    
 
         def find_client3(cursor,first_name=None, last_name=None,email=None, number=None):
             ''' Функция определяет id клиента
             по одному из параметров - имени , фамилии , адресу электронной почты ,
             либо номеру его телефона '''
 
-            # # Сформируем словарь 'название входного элемента':'значение входного элемента'
-            # data_in_dict = {'first_name': first_name, 'last_name': last_name, 'email': email, 'number': number}
-            #
-            # # Создадим возможность внесения изменений независимо друг от друга
-            #
-            # data = []  # рабочий список входных параметров
-            # data_out_0 = []  # Список выходных параметров
-            # for x, y in data_in_dict.items():
-            #     if y != None:
-            #         z = f'{x}=%s'
-            #         data.append(z)
-            #         data_out_0.append(y)
-            #
-            # data_in = ", ".join(data)  # строка входных данных
-            # data_out = tuple(data_out_0)  # кортеж выходных данных
-            #
-            # print(data_in)
-            # print(data_out)
+
 
             cursor.execute("""
                 SELECT cl.client_id FROM clients cl
